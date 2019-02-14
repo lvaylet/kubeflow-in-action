@@ -31,9 +31,9 @@ class ObjectDict(dict):
 )
 def train_and_deploy(
         project: dsl.PipelineParam = dsl.PipelineParam(name='project',
-                                                       value='kubernetes-the-hard-way-226114'),
+                                                       value='kubeflow-in-action'),
         bucket: dsl.PipelineParam = dsl.PipelineParam(name='bucket',
-                                                      value='kubeflow-ml-demos-226114'),
+                                                      value='kubeflow-in-action-bucket'),
         start_year: dsl.PipelineParam = dsl.PipelineParam(name='startYear',
                                                           value='2000')
 ):
