@@ -6,9 +6,19 @@ CLUSTER_NAME=my-kubeflow-cluster
 CLUSTER_VERSION=1.11.6-gke.6
 ZONE=europe-west1-b
 
+# Set current project and region/zone
 gcloud config set project ${PROJECT_ID}
 gcloud config set compute/zone ${ZONE}
 
+# Activate APIs
+# Available APIs can be listed with: gcloud services list --available
+# ---
+# Kubernetes Engine API
+gcloud services enable container.googleapis.com
+# Compute Engine API
+gcloud services enable compute.googleapis.com
+
+# Create Kubernetes cluster
 gcloud container clusters create ${CLUSTER_NAME} \
     --cluster-version ${CLUSTER_VERSION} \
     --enable-autoupgrade \
