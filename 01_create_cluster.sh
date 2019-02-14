@@ -13,10 +13,14 @@ gcloud config set compute/zone ${ZONE}
 # Activate APIs
 # Available APIs can be listed with: gcloud services list --available
 # ---
-# Kubernetes Engine API
+# Kubernetes Engine API (required to create the Kubernetes cluster)
 gcloud services enable container.googleapis.com
-# Compute Engine API
+# Compute Engine API (required to create the Kubernetes cluster)
 gcloud services enable compute.googleapis.com
+# Dataflow API (required by 'preprocess' step in pipeline)
+gcloud services enable dataflow.googleapis.com
+# ML Engine API (required by 'hypertrain' step in pipeline)
+gcloud services enable ml.googleapis.com
 
 # Create Kubernetes cluster
 gcloud container clusters create ${CLUSTER_NAME} \
