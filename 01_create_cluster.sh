@@ -21,6 +21,8 @@ gcloud services enable compute.googleapis.com
 gcloud services enable dataflow.googleapis.com
 # ML Engine API (required by 'hypertrain' step in pipeline)
 gcloud services enable ml.googleapis.com
+# App Engine Admin API (required by 'deployapp' step in pipeline)
+gcloud services enable appengine.googleapis.com
 
 # Create Kubernetes cluster
 gcloud container clusters create ${CLUSTER_NAME} \
