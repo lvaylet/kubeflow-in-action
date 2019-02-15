@@ -12,7 +12,8 @@ export MODEL_VERSION=$2
 cd /babyweight/src/training-data-analyst/courses/machine_learning/deepdive/06_structured/serving/application
 
 pip install -r requirements.txt -t lib
-gcloud app create --region europe-west1
+# Create App Engine application. Available regions can be listed with: gcloud app regions list
+gcloud app create --region europe-west3
 gcloud app deploy
 
 # output
