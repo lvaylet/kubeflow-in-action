@@ -45,7 +45,7 @@ def train_and_deploy(
         preprocess = dsl.ContainerOp(
             name='preprocess',
             # image needs to be a compile-time string
-            image='gcr.io/cloud-training-demos/babyweight-pipeline-bqtocsv:latest',
+            image='gcr.io/kubeflow-in-action/babyweight-pipeline-bqtocsv:latest',
             arguments=[
                 '--project', project,
                 '--mode', 'cloud',
@@ -66,7 +66,7 @@ def train_and_deploy(
         hparam_train = dsl.ContainerOp(
             name='hypertrain',
             # image needs to be a compile-time string
-            image='gcr.io/cloud-training-demos/babyweight-pipeline-hypertrain:latest',
+            image='gcr.io/kubeflow-in-action/babyweight-pipeline-hypertrain:latest',
             arguments=[
                 preprocess.outputs['bucket']
             ],
@@ -84,8 +84,8 @@ def train_and_deploy(
         train_tuned = dsl.ContainerOp(
             name='traintuned',
             # image needs to be a compile-time string
-            image='gcr.io/cloud-training-demos/babyweight-pipeline-traintuned-trainer:latest',
-            # image='gcr.io/cloud-training-demos/babyweight-pipeline-traintuned-trainer@sha256:3d73c805430a16d0675aeafa9819d6d2cfbad0f0f34cff5fb9ed4e24493bc9a8',
+            image='gcr.io/kubeflow-in-action/babyweight-pipeline-traintuned-trainer:latest',
+            # image='gcr.io/kubeflow-in-action/babyweight-pipeline-traintuned-trainer@sha256:3d73c805430a16d0675aeafa9819d6d2cfbad0f0f34cff5fb9ed4e24493bc9a8',
             arguments=[
                 hparam_train.outputs['jobname'],
                 bucket
@@ -97,7 +97,7 @@ def train_and_deploy(
     else:
         train_tuned = ObjectDict({
             'outputs': {
-                'train': 'gs://cloud-training-demos-ml/babyweight/hyperparam/15'
+                'train': 'gs://kubeflow-in-action-bucket/babyweight/hyperparam/15'
             }
         })
 
@@ -106,7 +106,7 @@ def train_and_deploy(
         deploy_cmle = dsl.ContainerOp(
             name='deploycmle',
             # image needs to be a compile-time string
-            image='gcr.io/cloud-training-demos/babyweight-pipeline-deploycmle:latest',
+            image='gcr.io/kubeflow-in-action/babyweight-pipeline-deploycmle:latest',
             arguments=[
                 train_tuned.outputs['train'],  # modeldir
                 'babyweight',
@@ -130,7 +130,7 @@ def train_and_deploy(
         deploy_cmle = dsl.ContainerOp(
             name='deployapp',
             # image needs to be a compile-time string
-            image='gcr.io/cloud-training-demos/babyweight-pipeline-deployapp:latest',
+            image='gcr.io/kubeflow-in-action/babyweight-pipeline-deployapp:latest',
             arguments=[
                 deploy_cmle.outputs['model'],
                 deploy_cmle.outputs['version']
@@ -142,7 +142,7 @@ def train_and_deploy(
     else:
         deploy_cmle = ObjectDict({
             'outputs': {
-                'appurl': 'https://cloud-training-demos.appspot.com/'
+                'appurl': 'https://kubeflow-in-action.appspot.com/'
             }
         })
 
